@@ -59,6 +59,7 @@ public class GameActivity extends AppCompatActivity {
                 TimerRunning = false;
                 Intent intent = new Intent(getApplicationContext(), ResultPage.class);
 
+
 //                SharedPreferences sharedPreferences = getSharedPreferences("com.nithinramkalava.mathminute", Context.MODE_PRIVATE);
 //                sharedPreferences.edit().putInt("score", score).apply();
 //                sharedPreferences.edit().putInt("questionCount", questionCount).apply();
