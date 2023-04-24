@@ -50,7 +50,7 @@ public class GameActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timerTextView.setText(String.valueOf(millisUntilFinished/1000));
+                timerTextView.setText(String.valueOf(millisUntilFinished/1000) + "s");
             }
 
             @Override
@@ -112,7 +112,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void updateScreen(Question question) {
 
-        scoreTextView.setText(score + "/" + questionCount);
+        scoreTextView.setText("score: " + score + "/" + questionCount);
         questionCount++;
         questionTextView.setText(question.question);
         option0.setText(String.valueOf(question.options[0]));

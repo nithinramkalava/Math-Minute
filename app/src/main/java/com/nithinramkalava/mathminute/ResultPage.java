@@ -45,7 +45,7 @@ public class ResultPage extends AppCompatActivity {
         df.setRoundingMode(RoundingMode.CEILING);
 
         scoreTextView.setText("Score: " + score + "/" + questionCount);
-        averageTimeTextView.setText("Average time taken per question: " + df.format(averageTime) + " seconds");
+        averageTimeTextView.setText("Average Response time per question:\n\n" + df.format(averageTime) + " seconds");
         accuracyTextView.setText("Accuracy: " + df.format((score*100)/questionCount) + "%");
 
     }
