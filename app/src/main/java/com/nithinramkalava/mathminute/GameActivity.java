@@ -150,4 +150,11 @@ public class GameActivity extends AppCompatActivity {
         }
         return new Question(a + " " + operation + " " + b + " = ", options, answerIndex);
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        countDownTimer.cancel();
+        finish();
+    }
 }
