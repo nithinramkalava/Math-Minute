@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Parcelable;
@@ -14,6 +15,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Timer;
@@ -50,7 +53,7 @@ public class GameActivity extends AppCompatActivity {
         countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                timerTextView.setText(String.valueOf(millisUntilFinished/1000) + "s");
+                timerTextView.setText(String.valueOf(millisUntilFinished / 1000) + "s");
             }
 
             @Override
@@ -59,26 +62,31 @@ public class GameActivity extends AppCompatActivity {
                 TimerRunning = false;
                 Intent intent = new Intent(getApplicationContext(), ResultPage.class);
 
-
-//                SharedPreferences sharedPreferences = getSharedPreferences("com.nithinramkalava.mathminute", Context.MODE_PRIVATE);
-//                sharedPreferences.edit().putInt("score", score).apply();
-//                sharedPreferences.edit().putInt("questionCount", questionCount).apply();
-
                 intent.putExtra("score", score);
                 intent.putExtra("questionCount", questionCount);
-                try {
-                    intent.putExtra("timeTakenForEachQuestion", ObjectSerializer.serialize(timeTakenForEachQuestion));
-                } catch (Exception e) {
-                    e.printStackTrace();
+
+                DecimalFormat df = new DecimalFormat("#.####");
+                df.setRoundingMode(RoundingMode.CEILING);
+
+                double averageTime = 0;
+                for (int i = 0; i < timeTakenForEachQuestion.size(); i++) {
+                    averageTime += timeTakenForEachQuestion.get(i);
                 }
-//                try {
-//                    sharedPreferences.edit().putString("timeTakenForEachQuestion",ObjectSerializer.serialize(timeTakenForEachQuestion)).apply();
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//                Bundle bundle = new Bundle();
-//                bundle.putStringArrayList("timeTakenForEachQuestion", timeTakenForEachQuestion);
+                averageTime /= timeTakenForEachQuestion.size();
+                averageTime = Double.parseDouble(df.format(averageTime));
+
+                intent.putExtra("averageTime", averageTime);
+
+                try {
+                    SQLiteDatabase sqLiteDatabase = getApplicationContext().openOrCreateDatabase("MathMinute", MODE_PRIVATE, null);
+                    sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS playedHistory (date DATE, score INTEGER, questionCount INTEGER, averageTimeTakenForEachQuestion BLOB)");
+                    sqLiteDatabase.execSQL("INSERT INTO playedHistory (date, score, questionCount, averageTimeTakenForEachQuestion) VALUES (datetime('now', 'localtime'), " + score + ", " + questionCount + ", '" + averageTime + "')");
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+
                 startActivity(intent);
+                finish();
             }
         }.start();
 
@@ -89,7 +97,7 @@ public class GameActivity extends AppCompatActivity {
 
     public void answered(View view) {
         endTime = (double) System.currentTimeMillis();
-        timeTakenForEachQuestion.add((endTime - startTime)/1000);
+        timeTakenForEachQuestion.add((endTime - startTime) / 1000);
         Button button = (Button) view;
         int tag = Integer.parseInt(button.getTag().toString());
         Log.i("Answer", String.valueOf(question.answerIndex));
@@ -98,16 +106,14 @@ public class GameActivity extends AppCompatActivity {
         if (tag == question.answerIndex) {
             score++;
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             Toast.makeText(this, "Wrong!", Toast.LENGTH_SHORT).show();
         }
 
         if (TimerRunning) {
             question = questionGenerator();
             updateScreen(question);
-        }
-        else Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show();
+        } else Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show();
     }
 
     public void updateScreen(Question question) {
@@ -124,8 +130,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public Question questionGenerator() {
-        String[] operators = {"+","-"};
-        int a,b;
+        String[] operators = {"+", "-"};
+        int a, b;
         int[] options = new int[4];
 
         a = random.nextInt(100);
@@ -135,7 +141,8 @@ public class GameActivity extends AppCompatActivity {
         int answerIndex = random.nextInt(4);
 
         for (int i = 0; i < 4; i++) {
-            if (i != answerIndex) options[i] = random.nextInt(2*(a+b)-2*(a-b)) + 2*(a-b);
+            if (i != answerIndex)
+                options[i] = random.nextInt(2 * (a + b) - 2 * (a - b)) + 2 * (a - b);
             else {
                 if (operation.equals("+")) options[i] = a + b;
                 else options[i] = a - b;

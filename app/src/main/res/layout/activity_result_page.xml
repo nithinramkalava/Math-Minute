@@ -5,54 +5,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#000000"
-    tools:context=".ResultPage"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".ResultPage">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="center">
-
-
-    <TextView
-        android:id="@+id/scoreTextViewResult"
-        android:layout_width="283dp"
-        android:layout_height="52dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="italic"
         android:layout_gravity="center"
-        android:layout_margin="25dp"/>
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/accuracyTextView"
-        android:layout_width="283dp"
-        android:layout_height="52dp"
-        android:text="TextView"
-        android:textAlignment="center"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:textStyle="italic"
-        android:layout_gravity="center"
-        android:layout_margin="25dp"/>
 
         <TextView
-            android:id="@+id/averageResponseTimeTextView"
+            android:id="@+id/scoreTextViewResult"
             android:layout_width="283dp"
-            android:layout_height="100dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_margin="25dp"
             android:text="TextView"
             android:textAlignment="center"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:textStyle="italic"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/accuracyTextView"
+            android:layout_width="283dp"
+            android:layout_height="52dp"
             android:layout_gravity="center"
-            android:layout_margin="25dp"/>
+            android:layout_margin="25dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/averageResponseTimeTextView"
+            android:layout_width="283dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_margin="25dp"
+            android:text="TextView"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="italic" />
 
     </LinearLayout>
 

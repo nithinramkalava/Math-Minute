@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Math Minute</string>
+    <string name="gameHistory"><u><b><i>Game History</i></b></u></string>
 </resources>
