@@ -26,7 +26,7 @@ public class GameHistory extends AppCompatActivity {
         playedHistoryListView = findViewById(R.id.playedHistoryListView);
 
         ArrayList<String> playedHistory = new ArrayList<>();
-        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, playedHistory);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, R.layout.list_view_text_style, playedHistory);
 
         playedHistoryListView.setOnItemClickListener((parent, view, position, id) -> {
 

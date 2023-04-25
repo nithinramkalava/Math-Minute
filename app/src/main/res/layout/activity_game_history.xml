@@ -22,7 +22,7 @@
         android:id="@+id/playedHistoryListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="15dp"
+        android:layout_margin="30dp"
         android:divider="@color/black"
         android:dividerHeight="30sp" />
 
